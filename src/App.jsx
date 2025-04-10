@@ -1,13 +1,18 @@
+import { useEffect, useState } from 'react';
 import './App.css';
+import Watch from './components/Watch/Watch';
 
 function App() {
 
+  const [watches,setWatches] = useState([]);
 
-  // const watches = [
-  //   {id:1, name:'Apple watch', price:200},
-  //   {id:2, name:'Samsung watch', price:200},
-  //   {id:3, name:'MI watch', price:200},  
-  // ]
+  useEffect(()=>{
+    fetch('watches.json')
+    .then(res => res.json())
+    .then(data => setWatches(data));
+  },[])
+
+ 
 
   // const watches = [
   //   {
@@ -71,7 +76,9 @@ function App() {
       
       <h1>Vite + React</h1>
   
-     
+     {
+       watches.map(watch => <Watch key={watch.id} watch={watch}> </Watch>)
+     }
     </>
   )
 }
